@@ -1,0 +1,59 @@
+{
+	"mesh": "/Users/teseo/Desktop/tvh/plate_hole/meshes/plane_hole_q_3.obj",
+
+	"vismesh_rel_area1": 0.00001,
+
+	"discr_order": 1,
+	"use_spline": false,
+
+	"problem": "GenericTensor",
+
+	"normalize_mesh": false,
+
+	"params": {
+		"E": 210000,
+		"nu": 0.3
+	},
+
+	"export": {
+
+	},
+
+	"problem_params": {
+
+		"dirichlet_boundary": [
+			{
+				"id": 1,
+				"dimension": [
+					true,
+					false
+				],
+				"value": [
+					0.0,
+					0.0
+				]
+			},
+			{
+				"id": 4,
+				"dimension": [
+					false,
+					true
+				],
+				"value": [
+					0.0,
+					0.0
+				]
+			}
+		],
+		"neumann_boundary": [
+			{
+				"id": 3,
+				"value": [
+					100,
+					0
+				]
+			}
+		]
+	}
+
+}
