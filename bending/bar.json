@@ -1,0 +1,40 @@
+{
+	"mesh": "",
+	"output": "",
+
+	"discr_order": 1,
+	"use_spline": false,
+
+	"problem": "GenericTensor",
+
+	"normalize_mesh": false,
+	"params": {
+		"E": 210000,
+		"nu": 0.3
+	},
+
+	"problem_params": {
+
+		"dirichlet_boundary": [
+			{
+				"id": 5,
+				"value": [
+					0.0,
+					0.0,
+					0.0
+				]
+			}
+		],
+		"neumann_boundary": [
+			{
+				"id": 6,
+				"value": [
+					0.0,
+					-2,
+					0.0
+				]
+			}
+		]
+	}
+
+}
