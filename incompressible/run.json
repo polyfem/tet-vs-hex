@@ -1,0 +1,64 @@
+{
+    "mesh": "",
+
+	"discr_order": 2,
+	"pressure_discr_order": 1,
+	"use_spline": false,
+
+	"problem": "GenericTensor",
+	"quadrature_order": 10,
+
+	"mixed_formulation": "IncompressibleLinearElasticity",
+
+	"normalize_mesh": true,
+
+	"params": {
+        "E": 1.190476190,
+        "nu": 0.6666666667
+	},
+
+	"problem_params": {
+		"use_mixed_formulation": true,
+
+		"dirichlet_boundary1": [
+			{
+				"id": 1,
+				"value": [
+					"(x+y)/10",
+					"0.0",
+					"0.0"
+				]
+			},
+			{
+				"id": 3,
+				"value": [
+					"(x+y)/10",
+					"0.0",
+					"0.0"
+				]
+			}
+		],
+
+		"dirichlet_boundary": [
+			{
+				"id": 1,
+				"value": [
+					0.2,
+					0.0,
+					0.0
+				]
+			},
+			{
+				"id": 3,
+				"value": [
+					-0.2,
+					0.0,
+					0.0
+				]
+			}
+		]
+	},
+
+	"export": {
+	}
+}
