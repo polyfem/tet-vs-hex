@@ -1,0 +1,21 @@
+{
+	"mesh": "/Users/teseo/data/tvh/stokes/meshes/tri.obj",
+	"output": "",
+
+	"n_refs": 0,
+
+	"discr_order": 2,
+	"pressure_discr_order": 1,
+	"use_spline": false,
+
+	"problem": "DrivenCavity",
+	"tensor_formulation": "Stokes",
+
+	"normalize_mesh": true,
+	"params": {
+		"viscosity": 1
+	},
+
+	"export": {
+	}
+}
