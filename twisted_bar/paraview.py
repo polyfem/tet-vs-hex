@@ -56,4 +56,4 @@ for source in sources:
 	line_res.SeriesColor[2] = str(colors[title][1]/255.)
 	line_res.SeriesColor[3] = str(colors[title][2]/255.)
 
-	SaveData('/Users/teseo/Desktop/tvh/twisted_bar/data/' + title + '.csv', proxy=line, Precision=30)
+	SaveData('./data/' + title + '.csv', proxy=line, Precision=30)

@@ -49,5 +49,5 @@ for i in range(len(warpeds)):
 	# solutionLUTColorBar.Enabled = True
 	# solutionLUTColorBar = GetScalarBar(solutionLUT, renderView)
 	RenderAllViews()
-	SaveScreenshot('/Users/teseo/data/tvh/L/images/' + n + '.png', renderView, ImageResolution=[2*2204, 2*960])
+	SaveScreenshot('./images/' + n + '.png', renderView, ImageResolution=[2*2204, 2*960])
 	Hide(w)

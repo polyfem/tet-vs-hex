@@ -5,7 +5,7 @@ import subprocess
 import tempfile
 
 if __name__ == '__main__':
-    polyfem_exe = "/users/teseo/Documents/scuola/polyfem/polyfem/bin_rel/PolyFEM_bin"
+    polyfem_exe = os.path.join(os.environ["POLYFEM_BIN_DIR"], "PolyFEM_bin")
     vtu_folder = "vtu"
     json_folder = "out"
 

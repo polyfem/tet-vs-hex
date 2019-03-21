@@ -1,6 +1,8 @@
 temp-plot.html
 download.sh
 
+*.sublime-*
+
 bending/results
 bending/surfaces
 bending/times

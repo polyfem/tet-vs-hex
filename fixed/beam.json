@@ -1,6 +1,6 @@
 {
-	"mesh": "/Users/teseo/Desktop/tvh/fixed/meshes/same_err_p3.HYBRID",
-	"output": "xx.json",
+	"mesh": "",
+	"output": "",
 
 	"discr_order": 1,
 	"use_spline": false,

@@ -45,5 +45,5 @@ for i in range(len(models)):
 	# solutionLUTColorBar.Enabled = True
 	# solutionLUTColorBar = GetScalarBar(solutionLUT, renderView)
 	RenderAllViews()
-	SaveScreenshot('/Users/teseo/Desktop/tvh/stokes/images/' + n + '.png', renderView, ImageResolution=[2*2204, 2*960])
+	SaveScreenshot('./images/' + n + '.png', renderView, ImageResolution=[2*2204, 2*960])
 	Hide(m)

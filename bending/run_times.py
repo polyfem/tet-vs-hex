@@ -5,7 +5,7 @@ import subprocess
 import tempfile
 
 if __name__ == '__main__':
-    polyfem_exe = "/users/teseo/Documents/scuola/polyfem/cpp/bin_rel/PolyFEM_bin"
+    polyfem_exe = os.path.join(os.environ["POLYFEM_BIN_DIR"], "PolyFEM_bin")
     out_folder = "times"
     folder_path = "meshes"
 

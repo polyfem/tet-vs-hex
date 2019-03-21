@@ -6,7 +6,7 @@ import tempfile
 import numpy as np
 
 if __name__ == '__main__':
-    polyfem_exe = "/users/teseo/Documents/scuola/polyfem/polyfem/bin_rel.nosync/PolyFEM_bin"
+    polyfem_exe = os.path.join(os.environ["POLYFEM_BIN_DIR"], "PolyFEM_bin")
     out_folder = "results"
 
     discr_orders = [1, 2]
