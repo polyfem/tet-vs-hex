@@ -76,28 +76,14 @@ if __name__ == '__main__':
     out_folder = "results"
     output = None #"plot"
 
-    # tri_name = "square_beam"
-    # hex_name = "square_beam_h"
-    # kk = -0.09694505138106606 / 2
-
-    # kk = -1289 / 26250 timoshenko
-    #      -0.09695810842054559 #dense Q2
-    #      -0.09694505138106606 #P4
+    tri_name = "square_beam"
+    hex_name = "square_beam_h"
+    kk = -0.09694505138106606 / 2
 
     # tri_name = "circle_beam"
     # hex_name = "circle_beam_h"
     # kk = -0.130740975373922 / 2
-    #      -0.130458480745257 #Q2
-    #      -0.130740975373922 #P4
 
-
-    tri_name = "rail"
-    hex_name = "rail_h"
-    kk = -0.14682749047099009 / 2
-    #     (-0.1471016817802368 + -0.14880825773454176) / 2 #P2 Q2 average
-    #    -0.14682749047099009 #P4
-
-    
 
     tf1, tk1, tf2, tk2 = load(tri_name)
     hf1, hk1, hf2, hk2 = load(hex_name)
