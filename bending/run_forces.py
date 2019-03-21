@@ -6,17 +6,15 @@ import tempfile
 import numpy as np
 
 if __name__ == '__main__':
-    polyfem_exe = "/users/teseo/Documents/scuola/polyfem/polyfem/bin_rel/PolyFEM_bin"
+    polyfem_exe = "/users/teseo/Documents/scuola/polyfem/polyfem/bin_rel.nosync/PolyFEM_bin"
     out_folder = "results"
 
     discr_orders = [1, 2]
     fs = -np.arange(0.1, 2.1, 0.1)
-    # fs = [-1]
 
-    # discr_orders = [2]
-    # fs = [-0.1]
+    exts = [".mesh", ".HYBRID"]
 
-    exts = ["mesh", "HYBRID"]
+    nodes = {"P1": 3962, "P2": 13688, "Q1": 6077, "Q2": 43097}
 
     folder_path = "meshes"
     current_folder = cwd = os.getcwd()
@@ -25,16 +23,24 @@ if __name__ == '__main__':
         json_data = json.load(f)
 
     for ext in exts:
-        for mesh in glob.glob(os.path.join(folder_path, "*." + ext)):
+        for mesh in glob.glob(os.path.join(folder_path, "*" + ext)):
+            print(mesh)
             basename = os.path.splitext(os.path.basename(mesh))[0]
 
             bc = os.path.join(current_folder, folder_path, basename + ".txt")
             mesh = os.path.join(current_folder, mesh)
 
             json_data["mesh"] = mesh
-            # json_data["bc_tag"] = bc
+
+            key = "Q" if "HYBRID" in ext else "P"
 
             for discr_order in discr_orders:
+                node_id = nodes[key + str(discr_order)]
+                if "rail" in basename:
+                    json_data["export"]["sol_at_node"] = node_id
+                else:
+                    json_data["export"]["sol_at_node"] = -1
+
                 for f in fs:
                     json_data["discr_order"] = discr_order
                     json_data["problem_params"]["neumann_boundary"][0]["value"][1] = f

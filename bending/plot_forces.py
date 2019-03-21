@@ -18,11 +18,13 @@ def plot(f, k, slope, name):
     x, y = zip(*sorted(zip(f, k))[:])
     y = np.absolute(y - np.asarray(x)*slope)
 
+    w = np.polyfit(x[:], y[:], 1)
+
     trace = go.Scatter(
         x=x,
         y=y,
         mode='lines+markers',
-        name=name,
+        name="{} {:.2e}".format(name, w[0]),
         line=dict(color=(colors[name])),
         marker=dict(symbol=marker_shapes[name], size=marker_sizes[name])
     )
@@ -59,7 +61,11 @@ def load(mesh_name):
             json_data = json.load(f)
 
         k = json_data["discr_order"]
-        disp = json_data["sol_min"][1]
+        if "rail" in mesh_name:
+            disp = json_data["sol_at_node"][1]
+        else:
+            disp = json_data["sol_min"][1]
+
         f = -json_data["args"]["problem_params"]["neumann_boundary"][0]["value"][1]
 
         if k == 1:
@@ -84,6 +90,11 @@ if __name__ == '__main__':
     # hex_name = "circle_beam_h"
     # kk = -0.130740975373922 / 2
 
+
+    # tri_name = "rail"
+    # hex_name = "rail_h"
+    # kk = -0.14057837735277648/2
+    
 
     tf1, tk1, tf2, tk2 = load(tri_name)
     hf1, hk1, hf2, hk2 = load(hex_name)
