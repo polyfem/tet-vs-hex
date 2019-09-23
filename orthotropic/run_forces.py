@@ -7,21 +7,14 @@ import numpy as np
 
 if __name__ == '__main__':
     polyfem_exe = os.path.join(os.environ["POLYFEM_BIN_DIR"], "PolyFEM_bin")
-    # out_folder = "results"
-    # folder_path = "meshes"
-    # j_file = "bar.json"
-
-    out_folder = "ar_res"
-    folder_path = "ar"
-    j_file = "ar.json"
+    out_folder = "results"
+    folder_path = "meshes"
+    j_file = "ortho.json"
 
     discr_orders = [1, 2]
-    fs = -np.arange(0.1, 2.1, 0.1)
+    fs = -np.arange(0.000001, 0.000021, 0.000001)
 
     exts = [".mesh", ".HYBRID"]
-
-    nodes = {"P1": 3962, "P2": 13688, "Q1": 6077, "Q2": 43097}
-
 
     current_folder = cwd = os.getcwd()
 
@@ -41,11 +34,7 @@ if __name__ == '__main__':
             key = "Q" if "HYBRID" in ext else "P"
 
             for discr_order in discr_orders:
-                node_id = nodes[key + str(discr_order)]
-                if "rail" in basename:
-                    json_data["export"]["sol_at_node"] = node_id
-                else:
-                    json_data["export"]["sol_at_node"] = -1
+                json_data["export"]["sol_at_node"] = -1
 
                 for f in fs:
                     json_data["discr_order"] = discr_order

@@ -56,17 +56,16 @@ def load(mesh_name):
     k2 = []
     f2 = []
 
-    for json_file in glob.glob(os.path.join(out_folder, mesh_name + "_k*.json")):
+    for json_file in glob.glob(os.path.join(os.path.dirname(__file__), out_folder, mesh_name + "_k*.json")):
         with open(json_file, 'r') as f:
             json_data = json.load(f)
 
         k = json_data["discr_order"]
-        if "rail" in mesh_name:
-            disp = json_data["sol_at_node"][1]
-        else:
-            disp = json_data["sol_min"][1]
+        disp = json_data["sol_min"][1]
 
         f = -json_data["args"]["problem_params"]["neumann_boundary"][0]["value"][1]
+        if f == 0:
+            print(json_file)
 
         if k == 1:
             k1.append(disp)
@@ -79,41 +78,12 @@ def load(mesh_name):
 
 
 if __name__ == '__main__':
-    # out_folder = "results"
-    out_folder = "ar_res"
-    output = "plot05"
+    out_folder = "results"
+    output = "ortho"
 
-    # tri_name = "square_beam"
-    # hex_name = "square_beam_h"
-    # kk = -0.09694505138106606 / 2
-
-    tri_name = "square_beam05"
-    hex_name = "square_beam_h05"
-    kk = -2.345675457072445 / 2
-
-    # tri_name = "square_beam10"
-    # hex_name = "square_beam_h10"
-    # kk = -9.35041275633748 / 2
-
-    # tri_name = "square_beam20"
-    # hex_name = "square_beam_h20"
-    # kk = -37.331913138375256 / 2
-
-
-    # tri_name = "square_beam50"
-    # hex_name = "square_beam_h20"
-    # kk = -232.83464438943108 / 2
-
-
-
-    # tri_name = "circle_beam"
-    # hex_name = "circle_beam_h"
-    # kk = -0.130740975373922 / 2
-
-
-    # tri_name = "rail"
-    # hex_name = "rail_h"
-    # kk = -0.14057837735277648/2
+    tri_name = "square_beam"
+    hex_name = "square_beam_h"
+    kk = -10.601655711409355 / 0.00002
 
 
     tf1, tk1, tf2, tk2 = load(tri_name)

@@ -1,0 +1,21 @@
+{
+	"mesh": "",
+
+	"discr_order": 2,
+	"use_spline": false,
+
+	"problem": "Gravity",
+	"normalize_mesh": true,
+
+	"problem_params": {
+		"force": 20
+	},
+
+	"params": {
+		"E": 200,
+		"nu": 0.35
+	},
+
+	"export": {
+	}
+}

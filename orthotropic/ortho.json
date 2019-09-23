@@ -1,21 +1,23 @@
 {
-	"mesh": "",
+	"mesh": "/Users/teseo/data/tet-vs-hex/orthotropic/meshes/square_beam.mesh",
 	"output": "",
-
-	"discr_order": 1,
+	"discr_order": 4,
 	"use_spline": false,
 
+	"n_refs": 0,
+
+	"tensor_formulation": "HookeLinearElasticity",
+
 	"problem": "GenericTensor",
-	"export": {},
 
 	"normalize_mesh": false,
 	"params": {
-		"E": 210000,
-		"nu": 0.3
+		"elasticity_tensor": [167, 33, 33, 0.18, 0.25, 0.18, 13, 21, 21]
 	},
 
-	"problem_params": {
+	"export": { },
 
+	"problem_params": {
 		"dirichlet_boundary": [
 			{
 				"id": 5,
@@ -31,7 +33,7 @@
 				"id": 6,
 				"value": [
 					0.0,
-					-2,
+					-0.00002,
 					0.0
 				]
 			}

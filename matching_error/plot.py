@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
     _, tk2 = load(tri_name)
     hk1, _ = load(hex_name)
-    # hs, _ = load(spline_name)
+    hs, _ = load(spline_name)
 
     layout = go.Layout(
         legend=dict(x=0.9, y=0.9),
@@ -128,7 +128,7 @@ if __name__ == '__main__':
     data.extend(plot(hk1, ratio, "Q1"))
     data.extend(plot(tk2, ratio, "P2"))
 
-    # data.extend(plot(hs, ratio, "Spline"))
+    data.extend(plot(hs, ratio, "Spline"))
 
 
     fig = go.Figure(data=data, layout=layout)

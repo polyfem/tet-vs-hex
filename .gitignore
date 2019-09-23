@@ -4,6 +4,7 @@ download.sh
 *.sublime-*
 
 bending/results
+bending/ar_res
 bending/surfaces
 bending/times
 bending/tmp
@@ -39,12 +40,16 @@ stokes/images
 stokes/results
 
 
-
-
-
+orthotropic/results
 
 twisted_bar/cropped
 twisted_bar/data
 twisted_bar/data_coarse
 twisted_bar/images
 twisted_bar/images_coarse
+
+
+time-depentent/results
+time-depentent/out*
+time-depentent/vtu*
+time-depentent/mesh.py
