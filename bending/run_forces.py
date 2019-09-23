@@ -49,6 +49,8 @@ if __name__ == '__main__':
 
                 for f in fs:
                     json_data["discr_order"] = discr_order
+                    if "nice" in basename:
+                        f = -f
                     json_data["problem_params"]["neumann_boundary"][0]["value"][1] = f
                     json_data["output"] = os.path.join(current_folder, out_folder, basename + "_k" + str(discr_order) + "_f" + str(abs(f)) + ".json")
                     # json_data["output"] = os.path.join(current_folder, out_folder, "out_" + basename + "_k" + str(discr_order) + ".json")

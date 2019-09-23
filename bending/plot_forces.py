@@ -66,7 +66,7 @@ def load(mesh_name):
         else:
             disp = json_data["sol_min"][1]
 
-        f = -json_data["args"]["problem_params"]["neumann_boundary"][0]["value"][1]
+        f = abs(json_data["args"]["problem_params"]["neumann_boundary"][0]["value"][1])
 
         if k == 1:
             k1.append(disp)
@@ -81,7 +81,7 @@ def load(mesh_name):
 if __name__ == '__main__':
     # out_folder = "results"
     out_folder = "ar_res"
-    output = "plot05"
+    output = "plot20_nice"
 
     # tri_name = "square_beam"
     # hex_name = "square_beam_h"
@@ -97,12 +97,13 @@ if __name__ == '__main__':
 
     # tri_name = "square_beam20"
     # hex_name = "square_beam_h20"
-    # kk = -37.331913138375256 / 2
+    # kk = -37.36296475204071 / 2
+
+    tri_name = "square_beam20_nice"
+    hex_name = "square_beam_h20"
+    kk = -37.36296475204071 / 2
 
 
-    # tri_name = "square_beam50"
-    # hex_name = "square_beam_h20"
-    # kk = -232.83464438943108 / 2
 
 
 

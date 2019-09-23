@@ -1,5 +1,5 @@
 {
-	"mesh": "/Users/teseo/data/tet-vs-hex/bending/ar/square_beam20.mesh",
+	"mesh": "/Users/teseo/data/tet-vs-hex/bending/ar/square_beam20_nice.mesh",
 	"output": "",
 
 	"discr_order": 4,

@@ -1,7 +1,9 @@
 temp-plot.html
 download.sh
 
+.vscode
 *.sublime-*
+*.code*
 
 bending/results
 bending/ar_res
