@@ -17,6 +17,12 @@ def plot(data, is_min):
 
     n = -1
 
+
+    use_log = True
+
+    mmax = 4 if use_log else 500
+    step = 0.05 if use_log else 10
+
     for k in data:
         v = data[k][0] if is_min else data[k][1]
         if n == -1:
@@ -24,14 +30,19 @@ def plot(data, is_min):
         else:
             assert(n == len(v))
 
+        if use_log:
+            v = np.log10(v)
+
+        v[v >= mmax] = mmax
+
         hist = go.Histogram(
             x = v,
             histnorm='percent',
             name = k,
             xbins=dict(  # bins used for histogram
-                start=1,
-                end=1.5,
-                size=0.01
+                start=0,
+                end=mmax,
+                size=step
             ),
             marker=dict(color=colors[k])
         )
@@ -57,8 +68,8 @@ def load(prefix):
 
 
 if __name__ == '__main__':
-    prefix = "10k"
-    # prefix = "hexalab"
+    # prefix = "10k"
+    prefix = "hexalab"
     is_min = False
     output = prefix
 
@@ -76,7 +87,10 @@ if __name__ == '__main__':
             nticks=5,
             tickfont=dict(
                 size=16
-            )
+            ),
+            tickmode='array',
+            tickvals=[0, 1, 2, 3, 4],
+            ticktext=['0', '1', '1e2', '1e3', '1e4']
         ),
         yaxis=dict(
             title="Percentage",
@@ -102,6 +116,9 @@ if __name__ == '__main__':
     plot_data = plot(data, is_min)
 
     fig = go.Figure(data=plot_data, layout=layout)
+
+
+
     if output is not None:
         plotly.plot(fig, image="svg", image_filename=output)
     else:

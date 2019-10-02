@@ -1,4 +1,4 @@
-name min max
+name max min
 2011GP_anc101_a1 34.5663 1.10683
 2011GP_asm001 9.47192 1.02064
 2011GP_bumpy_torus 23.481 1.08387
