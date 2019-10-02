@@ -10,9 +10,14 @@
 
 	"normalize_mesh": false,
 
-	"params": {
+	"params1": {
 		"E": 210000,
 		"nu": 0.3
+	},
+
+	"params": {
+		"E": 0.1,
+		"nu": 0.9999
 	},
 
 	"export": {

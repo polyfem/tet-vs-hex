@@ -80,15 +80,16 @@ def load(mesh_name):
 
 if __name__ == '__main__':
     # out_folder = "results"
+    output = None
     out_folder = "ar_res"
-    output = "plot20_nice"
+    # output = "plot20_nice"
 
     # tri_name = "square_beam"
     # hex_name = "square_beam_h"
     # kk = -0.09694505138106606 / 2
 
-    tri_name = "square_beam05"
-    hex_name = "square_beam_h05"
+    # tri_name = "square_beam05"
+    # hex_name = "square_beam_h05"
     kk = -2.345675457072445 / 2
 
     # tri_name = "square_beam10"
@@ -97,11 +98,11 @@ if __name__ == '__main__':
 
     # tri_name = "square_beam20"
     # hex_name = "square_beam_h20"
-    # kk = -37.36296475204071 / 2
+    # kk = -37.36296341373767 / 2
 
     tri_name = "square_beam20_nice"
     hex_name = "square_beam_h20"
-    kk = -37.36296475204071 / 2
+    kk = -37.36296341373767 / 2
 
 
 

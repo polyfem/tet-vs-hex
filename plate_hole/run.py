@@ -6,7 +6,8 @@ import tempfile
 
 if __name__ == '__main__':
     polyfem_exe = os.path.join(os.environ["POLYFEM_BIN_DIR"], "PolyFEM_bin")
-    out_folder = "results"
+    # out_folder = "results"
+    out_folder = "results_inc"
 
     folder_path = "meshes"
     current_folder = cwd = os.getcwd()

@@ -8,16 +8,12 @@ if __name__ == '__main__':
     polyfem_exe = os.path.join(os.environ["POLYFEM_BIN_DIR"], "PolyFEM_bin")
 
 
-    # out_folder = "times"
-    # folder_path = "meshes"
-    # j_file = "bar.json"
-
-    out_folder = "ar_times"
-    folder_path = "ar"
-    j_file = "ar.json"
+    out_folder = "times"
+    folder_path = "meshes"
+    j_file = "ortho.json"
 
     discr_orders = [1, 2]
-    force = -1
+    force = -0.00001
 
     exts = ["mesh", "HYBRID"]
 
@@ -33,11 +29,6 @@ if __name__ == '__main__':
     for ext in exts:
         for mesh in glob.glob(os.path.join(folder_path, "*." + ext)):
             basename = os.path.splitext(os.path.basename(mesh))[0]
-
-            f = force
-            if "nice" in basename and "_h" not in basename:
-                f = -f
-            json_data["problem_params"]["neumann_boundary"][0]["value"][1] = f
 
             # bc = os.path.join(current_folder, folder_path, basename + ".txt")
             mesh = os.path.join(current_folder, mesh)

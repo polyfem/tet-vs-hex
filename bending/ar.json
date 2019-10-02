@@ -1,14 +1,12 @@
 {
-	"mesh": "/Users/teseo/data/tet-vs-hex/bending/ar/square_beam20_nice.mesh",
+	"mesh": "/Users/teseo/data/tet-vs-hex/bending/ar/square_h_1.mesh",
 	"output": "",
 
-	"discr_order": 4,
+	"discr_order": 1,
 	"use_spline": false,
 
 	"problem": "GenericTensor",
-	"count_flipped_els": false,
-
-	"solver_type": "Eigen::UmfPackLU",
+	"count_flipped_els": true,
 
 	"export": {
 		"sol_at_node": -1

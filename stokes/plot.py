@@ -13,48 +13,48 @@ marker_shapes = {'P1': 'circle', 'P2': 'circle', 'Q1': 'star', 'Q2': 'star'}
 marker_sizes = {'P1': 6, 'P2': 6, 'Q1': 10, 'Q2': 10}
 
 
-def plot(t, disp, name, suffix):
-    x, y = zip(*sorted(zip(t, disp))[:])
+def plot(xx, yy, name, pos):
+    n = int(len(xx)/3)
+    x, y = zip(*sorted(zip(xx, yy))[:n])
 
     trace = go.Scatter(
         x=x,
         y=y,
-        mode='lines+markers',
-        name="{} {}".format(name, suffix),
-        line=dict(color=(colors[name]), dash='solid' if suffix == "coarse" else "dash"),
-        marker=dict(symbol=marker_shapes[name], size=marker_sizes[name]* (1 if suffix == "coarse" else 0))
+        mode='lines',
+        name="{} {}".format(name, pos),
+        line=dict(color=(colors[name]), dash='solid' if name == "Q2" else 'dash'),
     )
 
     return trace
 
 
-
-def load(name, folder, tend):
-    csv_name = os.path.join(folder, "{}.csv".format(name))
+def load(folder, fname):
+    csv_name = os.path.join(folder, "{}.csv".format(fname))
     data = pd.read_csv(csv_name)
-    t = np.array(data["Time"])
-    t = t/np.max(t)*tend
-    disp = np.array(data["max(solution (0))"])
 
-    return name, t, disp
+    x = np.array(data["arc_length"])
+    y = np.array(data["solution:1"])
+
+    return x, y
 
 
 if __name__ == '__main__':
-    out_folders = {"vtu": "fine", "vtu_coarse": "coarse"}
-    # out_folders = {"vtu_coarse": "coarse"}
-    tend = 0.5
-    output = "plot"
+    root = "data"
+    data = {
+        "q50": ["Q2", "0.5"], "t50": ["P2", "0.5"],
+        "q05": ["Q2", "0.05"], "t05": ["P2", "0.05"],
+        "q01": ["Q2", "0.01"], "t01": ["P2", "0.01"]
+        }
+    output = "stokes"
 
     trace = []
-    for out_f in out_folders:
-        for k in colors:
-            n, t, disp = load(k, out_f, tend)
-            # err = np.abs(dispp1 - exact)
 
-            trace.append(plot(t, disp, n, out_folders[out_f]))
+    for out_f in data:
+        x, y = load(root, out_f)
+        trace.append(plot(x, y, data[out_f][0], data[out_f][1]))
 
     layout = go.Layout(
-        legend=dict(x=0.1, y=0.87),
+        legend=dict(x=0.6, y=0.87),
         xaxis=dict(
             title="Time",
             showticksuffix='all',
@@ -67,7 +67,7 @@ if __name__ == '__main__':
             )
         ),
         yaxis=dict(
-            title="X-displacement",
+            title="Y-velocity",
             # title="Error",
             # type='log',
 

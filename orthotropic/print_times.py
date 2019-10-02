@@ -28,25 +28,12 @@ def print_line(title, tb, ta, ts, t, e):
 
 
 if __name__ == '__main__':
-    # path = "times"
-    # prefixes = ["square_beam", "square_beam_h", "circle_beam", "circle_beam_h", "rail", "rail_h"]
+    path = "times"
+    prefixes = ["square_beam", "square_beam_h"]
 
-    path = "ar_times"
-    prefixes = [
-        "square_beam05", "square_beam_h05",
-        "square_beam10", "square_beam_h10",
-        "square_beam20", "square_beam_h20",
-        "square_beam20_split", "square_beam_h20",
-        "square_beam20_nice", "square_beam_h20_nice",
-        "square_beam20_split8", "square_beam_h20_nice"]
 
     exacts = {
-        "square_beam": -0.09694505138106606 / 2,
-        "square_beam05": -2.345675457072445 / 2,
-        "square_beam10": -9.35041275633748 / 2,
-        "square_beam20": -37.36296341373767 / 2,
-        "circle_beam": -0.130740975373922 / 2,
-        "rail": -0.14057837735277648 / 2
+        "square_beam": -10.601655711409355 / 2
     }
 
     discrs = [1, 2]
@@ -81,13 +68,7 @@ if __name__ == '__main__':
                     else:
                         disp = json_data["sol_min"][1]
 
-                    exact = exacts[
-                        prefix.replace("_h", "").
-                        replace("_nice", "").
-                        replace("_split8", "").
-                        replace("_split16", "").
-                        replace("_split30", "").
-                        replace("_split", "")]
+                    exact = exacts[prefix.replace("_h", "").replace("_nice", "")]
 
                     bb.append(json_data["time_building_basis"])
                     aa.append(json_data["time_assembling_stiffness_mat"])
