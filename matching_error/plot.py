@@ -3,27 +3,33 @@ import json
 import glob
 import pandas as pd
 from pandas.io.json import json_normalize
+import numpy as np
 
 import plotly.graph_objs as go
 import plotly.offline as plotly
 
 colors = {'P1': 'rgb(9, 132, 227)', 'P2': 'rgb(108, 92, 231)', 'Q1': 'rgb(225, 112, 85)', 'Q2': 'rgb(214, 48, 49)', 'Spline': 'rgb(45, 52, 54)'}
-marker_shapes = {'P1': 'circle', 'P2': 'circle', 'Q1': 'star', 'Q2': 'star'}
-marker_sizes = {'P1': 6, 'P2': 6, 'Q1': 10, 'Q2': 10}
+marker_shapes = {'P1': 'circle', 'P2': 'circle', 'Q1': 'star', 'Q2': 'star', 'Spline': 'square'}
+marker_sizes = {'P1': 6, 'P2': 6, 'Q1': 10, 'Q2': 10, 'Spline': 6}
 
 
 def plot(k, ratio, name):
-    if k.empty:
+    if len(k) <=0:
         return []
 
     x = []
 
-    for v in k["sol_min"].values:
+    for v in k[0]["sol_min"].values:
         x.append(abs(v[1] - ratio * 2))
 
-    y = k["time_building_basis"].values + k["time_assembling_stiffness_mat"].values + k["time_solving"].values
-    # y = k["time_solving"].values
-    # y = k["solver_info.mem_total_peak"].values
+    y = np.zeros(k[0]["time_solving"].values.shape)
+
+    for e in k:
+        y += e["time_building_basis"].values + e["time_assembling_stiffness_mat"].values + e["time_solving"].values
+        # y += e["time_solving"].values
+        # y += e["solver_info.mem_total_peak"].values
+
+    y /= len(k)
 
     if name == "Q1":
         x, y = zip(*sorted(zip(x, y))[2:])
@@ -45,28 +51,35 @@ def plot(k, ratio, name):
 
 
 def load(mesh_name):
+    k1 = []
+    k2 = []
 
-    k1 = pd.DataFrame()
-    k2 = pd.DataFrame()
+    for r in range(10):
+        k1t = pd.DataFrame()
+        k2t = pd.DataFrame()
 
-    for json_file in glob.glob(os.path.join(out_folder, mesh_name + "*.json")):
-        with open(json_file, 'r') as f:
-            json_data = json.load(f)
+        for json_file in glob.glob(os.path.join(out_folder, "run_{}".format(r), mesh_name + "*.json")):
+            with open(json_file, 'r') as f:
+                json_data = json.load(f)
 
-        k = json_data["discr_order"]
+            if json_data is None:
+                print(json_file)
+            k = json_data["discr_order"]
 
-        tmp = json_normalize(json_data)
+            tmp = json_normalize(json_data)
 
-        if k == 1:
-            if k1.empty:
-                k1 = tmp
+            if k == 1:
+                if k1t.empty:
+                    k1t = tmp
+                else:
+                    k1t = pd.concat([k1t, tmp])
             else:
-                k1 = pd.concat([k1, tmp])
-        else:
-            if k2.empty:
-                k2 = tmp
-            else:
-                k2 = pd.concat([k2, tmp])
+                if k2t.empty:
+                    k2t = tmp
+                else:
+                    k2t = pd.concat([k2t, tmp])
+        k1.append(k1t)
+        k2.append(k2t)
 
     return k1, k2
 
@@ -82,7 +95,7 @@ if __name__ == '__main__':
     ratio = -0.09694505138106606 / 2
 
 
-    output = "P2_Q1"
+    output = "P2_Q1_S"
 
     _, tk2 = load(tri_name)
     hk1, _ = load(hex_name)

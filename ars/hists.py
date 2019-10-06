@@ -11,25 +11,43 @@ colors = {
     'hex': 'rgb(225, 112, 85)', 'Q1': 'rgb(225, 112, 85)', 'Q2': 'rgb(214, 48, 49)'}
 
 
+use_logs = [
+    True, False, False
+]
 
-def plot(data, is_min):
+ranges = [
+    (3, 500),
+    (3, 50),
+    (0.6, 4)
+]
+
+steps = [
+    (0.05, 10),
+    (0.05, 1),
+    (0.01, 0.05),
+]
+
+
+def plot(data, key):
     trace = []
 
     n = -1
 
+    use_log = use_logs[key]
 
-    use_log = True
+    index = 0 if use_log else 1
 
-    mmax = 4 if use_log else 500
-    step = 0.05 if use_log else 10
+    mmax = ranges[key][index]
+    step = steps[key][index]
 
     for k in data:
-        v = data[k][0] if is_min else data[k][1]
+        v = data[k][key]
         if n == -1:
             n = len(v)
         else:
             assert(n == len(v))
 
+        v = np.sqrt(v)
         if use_log:
             v = np.log10(v)
 
@@ -61,17 +79,22 @@ def load(prefix):
         data = pd.read_csv("{}_{}.{}".format(prefix, suffix, ext), delim_whitespace=suffix=="hex")
         mmin = data["min"].values
         mmax = data["max"].values
+        avg = data["avg"].values
 
-        res[suffix] = (mmin, mmax)
+        res[suffix] = (mmin, mmax, avg)
 
     return res
 
 
 if __name__ == '__main__':
+    keys = {"min": 0, "max": 1, "avg": 2}
+
     # prefix = "10k"
     prefix = "hexalab"
-    is_min = False
-    output = prefix
+    name = "avg"
+
+    key = keys[name]
+    output = "{}_{}".format(prefix, name)
 
     data = load(prefix)
 
@@ -89,8 +112,8 @@ if __name__ == '__main__':
                 size=16
             ),
             tickmode='array',
-            tickvals=[0, 1, 2, 3, 4],
-            ticktext=['0', '1', '1e2', '1e3', '1e4']
+            # tickvals=[0, 0.5, 1, 1.5, 2, 2.5],
+            # ticktext=['0', '', '1', '', '1e2', '']
         ),
         yaxis=dict(
             title="Percentage",
@@ -113,7 +136,7 @@ if __name__ == '__main__':
         hovermode='closest'
     )
 
-    plot_data = plot(data, is_min)
+    plot_data = plot(data, key)
 
     fig = go.Figure(data=plot_data, layout=layout)
 
