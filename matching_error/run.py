@@ -9,17 +9,17 @@ if __name__ == '__main__':
     out_folder = "err"
     refs = [0, 1]
 
-    p2s = [ [], []
+    p2s = [[], ["square_beam.off_20.mesh"]
         # ["square_beam.off_1.mesh", "square_beam.off_10.mesh", "square_beam.off_20.mesh", "square_beam.off_5.mesh", "square_beam.off_50.mesh", "square_beam.off_6.mesh", "square_beam.off_7.mesh", "square_beam.off_8.mesh", "square_beam.off_9.mesh"],
-        # ["square_beam.off_1.mesh", "square_beam.off_5.mesh", "square_beam.off_6.mesh", "square_beam.off_7.mesh", "square_beam.off_8.mesh", "square_beam.off_9.mesh", "square_beam.off_10.mesh"]
+        # ["square_beam.off_1.mesh", "square_beam.off_5.mesh", "square_beam.off_6.mesh", "square_beam.off_7.mesh", "square_beam.off_8.mesh", "square_beam.off_9.mesh", "square_beam.off_10.mesh", "square_beam.off_20.mesh"]
     ]
-    q1s = [[], ["square_beam.off_10.HYBRID"]
+    q1s = [[], []
         # ["square_beam.off_1.HYBRID", "square_beam.off_10.HYBRID", "square_beam.off_20.HYBRID", "square_beam.off_5.HYBRID", "square_beam.off_50.HYBRID", "square_beam.off_6.HYBRID", "square_beam.off_7.HYBRID", "square_beam.off_8.HYBRID", "square_beam.off_9.HYBRID"],
         # ["square_beam.off_1.HYBRID", "square_beam.off_5.HYBRID", "square_beam.off_6.HYBRID", "square_beam.off_7.HYBRID", "square_beam.off_8.HYBRID", "square_beam.off_9.HYBRID", "square_beam.off_10.HYBRID"]
     ]
-    splines = [ [], []
+    splines = [[], ["spline_square_beam.off_20.HYBRID"]
         # ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID", "spline_square_beam.off_5.HYBRID", "spline_square_beam.off_50.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID"],
-        # ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_5.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID", "spline_square_beam.off_10.HYBRID"]
+        # ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_5.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID"]
     ]
 
     n_runs = 10

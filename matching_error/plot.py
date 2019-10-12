@@ -95,7 +95,7 @@ if __name__ == '__main__':
     ratio = -0.09694505138106606 / 2
 
 
-    output = "P2_Q1_S"
+    output = None #"P2_Q1_S"
 
     _, tk2 = load(tri_name)
     hk1, _ = load(hex_name)
@@ -110,7 +110,7 @@ if __name__ == '__main__':
             showtickprefix='all',
             showexponent='all',
             # autotick=True,
-            type='log',
+            # type='log',
             nticks=5,
             tickfont=dict(
                 size=16
@@ -125,7 +125,7 @@ if __name__ == '__main__':
             # tick0=0,
             # dtick=1,
             # tickangle=-45,
-            type='log',
+            # type='log',
             tickfont=dict(
                 size=16
             ),
