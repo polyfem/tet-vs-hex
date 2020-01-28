@@ -6,6 +6,7 @@ import tempfile
 
 if __name__ == '__main__':
     polyfem_exe = os.path.join(os.environ["POLYFEM_BIN_DIR"], "PolyFEM_bin")
+    print(polyfem_exe)
     out_folder = "err"
     refs = [0, 1]
 
@@ -18,10 +19,19 @@ if __name__ == '__main__':
         # ["square_beam.off_1.HYBRID", "square_beam.off_5.HYBRID", "square_beam.off_6.HYBRID", "square_beam.off_7.HYBRID", "square_beam.off_8.HYBRID", "square_beam.off_9.HYBRID", "square_beam.off_10.HYBRID"]
     ]
 
-    q2s = [
-        ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID", "spline_square_beam.off_5.HYBRID", "spline_square_beam.off_50.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID"],
-        ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_5.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID"]
-    ]
+    use_reduced = True
+    if use_reduced:
+        q2s = [
+            ["spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID", "spline_square_beam.off_50.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID"],
+            ["spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID"]
+        ]
+    else:
+        q2s = [
+            ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID", "spline_square_beam.off_5.HYBRID",
+                "spline_square_beam.off_50.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID"],
+            ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_5.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID",
+                "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID"]
+        ]
 
     splines = [[], [] #["spline_square_beam.off_20.HYBRID"]
         # ["spline_square_beam.off_1.HYBRID", "spline_square_beam.off_10.HYBRID", "spline_square_beam.off_20.HYBRID", "spline_square_beam.off_5.HYBRID", "spline_square_beam.off_50.HYBRID", "spline_square_beam.off_6.HYBRID", "spline_square_beam.off_7.HYBRID", "spline_square_beam.off_8.HYBRID", "spline_square_beam.off_9.HYBRID"],
@@ -48,6 +58,7 @@ if __name__ == '__main__':
 
             json_data["n_refs"] = n_refs
             json_data["quadrature_order"] = 4
+            json_data["serendipity"] = False
 
             print("------------------")
             print("P2")
@@ -107,10 +118,11 @@ if __name__ == '__main__':
 
                 json_data["mesh"] = mesh
                 json_data["discr_order"] = 2
-                json_data["quadrature_order"] = 2
+                json_data["serendipity"] = True
+                json_data["quadrature_order"] = 2 if use_reduced else 4
                 json_data["use_spline"] = False
                 json_data["output"] = os.path.join(
-                    current_folder, out_folder, run_f, "Q2_" + basename + "_" + str(n_refs) + ".json")
+                    current_folder, out_folder, run_f, "S" + ("R" if use_reduced else "") + "_" + basename + "_" + str(n_refs) + ".json")
 
                 with tempfile.NamedTemporaryFile(suffix=".json") as tmp_json:
                     with open(tmp_json.name, 'w') as f:
@@ -122,6 +134,7 @@ if __name__ == '__main__':
 
                     subprocess.run(args)
 
+            json_data["serendipity"] = False
             json_data["quadrature_order"] = 4
             # #######################################################################
             print("------------------")

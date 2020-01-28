@@ -4,13 +4,14 @@ import glob
 import pandas as pd
 from pandas.io.json import json_normalize
 import numpy as np
+import pickle
 
 import plotly.graph_objs as go
 import plotly.offline as plotly
 
-colors = {'P1': 'rgb(9, 132, 227)', 'P2': 'rgb(108, 92, 231)', 'Q1': 'rgb(225, 112, 85)', 'Q2': 'rgb(214, 48, 49)', 'Spline': 'rgb(45, 52, 54)'}
-marker_shapes = {'P1': 'circle', 'P2': 'circle', 'Q1': 'star', 'Q2': 'star', 'Spline': 'square'}
-marker_sizes = {'P1': 6, 'P2': 6, 'Q1': 10, 'Q2': 10, 'Spline': 6}
+colors = {'P1': 'rgb(9, 132, 227)', 'P2': 'rgb(108, 92, 231)', 'Q1': 'rgb(225, 112, 85)', 'Q2': 'rgb(214, 48, 49)', 'SR': 'rgb(253, 203, 110)', 'Q2R': 'rgb(255, 234, 167)', 'S': 'rgb(250, 177, 160)', 'Spline': 'rgb(45, 52, 54)'}
+marker_shapes = {'P1': 'circle', 'P2': 'circle', 'Q1': 'star', 'Q2': 'star','Q2R': 'star','SR': 'star','S': 'star', 'Spline': 'square'}
+marker_sizes = {'P1': 6, 'P2': 6, 'Q1': 10, 'Q2': 10, 'Q2R': 10, 'SR': 10, 'S': 10, 'Spline': 6}
 
 
 def plot(k, ratio, name):
@@ -31,10 +32,10 @@ def plot(k, ratio, name):
 
     y /= len(k)
 
-    if name == "Q1":
-        x, y = zip(*sorted(zip(x, y))[2:])
-        # x = x[2:]
-        # y = y[2:]
+    if name == "SR":
+        x, y = zip(*sorted(zip(x, y))[2:-2])
+    #     # x = x[2:]
+    #     # y = y[2:]
     else:
         x, y = zip(*sorted(zip(x, y))[2:])
 
@@ -50,9 +51,16 @@ def plot(k, ratio, name):
     return [trace]
 
 
-def load(mesh_name):
+def load(mesh_name, first, name, data_folder):
     k1 = []
     k2 = []
+
+    pickle_path = os.path.join(data_folder, name)
+    if os.path.isfile(pickle_path):
+        with open(pickle_path, "rb") as fp:
+            return pickle.load(fp)
+
+
 
     for r in range(10):
         k1t = pd.DataFrame()
@@ -81,15 +89,25 @@ def load(mesh_name):
         k1.append(k1t)
         k2.append(k2t)
 
-    return k1, k2
+    tmp = k1 if first else k2
+
+    with open(pickle_path, "wb") as fp:
+        pickle.dump(tmp, fp)
+
+    return tmp
 
 
 if __name__ == '__main__':
     out_folder = "err"
+    data_folder = "data"
 
     tri_name = "P2_"
     hex_name = "Q1_"
+    reduced_name = "Q2R_"
+    q2_name = "Q2_"
     spline_name = "spline_"
+    serendipity_r = "SR_"
+    serendipity = "S_"
 
     # using dense P4 solution
     ratio = -0.09694505138106606 / 2
@@ -97,9 +115,14 @@ if __name__ == '__main__':
 
     output = None #"P2_Q1_S"
 
-    _, tk2 = load(tri_name)
-    hk1, _ = load(hex_name)
-    hs, _ = load(spline_name)
+    tk2 = load(tri_name, False, "tk2.pkl", data_folder)
+    hk1 = load(hex_name, True, "hk1.pkl", data_folder)
+    hs = load(spline_name, True, "hs.pkl", data_folder)
+    reduced = load(reduced_name, False, "reduced.pkl", data_folder)
+    q2 = load(q2_name, False, "q2.pkl", data_folder)
+    sr = load(serendipity_r, False, "sr.pkl", data_folder)
+    S = load(serendipity, False, "S.pkl", data_folder)
+
 
     layout = go.Layout(
         legend=dict(x=0.9, y=0.9),
@@ -110,7 +133,7 @@ if __name__ == '__main__':
             showtickprefix='all',
             showexponent='all',
             # autotick=True,
-            # type='log',
+            type='log',
             nticks=5,
             tickfont=dict(
                 size=16
@@ -125,7 +148,7 @@ if __name__ == '__main__':
             # tick0=0,
             # dtick=1,
             # tickangle=-45,
-            # type='log',
+            type='log',
             tickfont=dict(
                 size=16
             ),
@@ -142,6 +165,10 @@ if __name__ == '__main__':
     data.extend(plot(tk2, ratio, "P2"))
 
     data.extend(plot(hs, ratio, "Spline"))
+    # data.extend(plot(reduced, ratio, "Q2R"))
+    data.extend(plot(q2, ratio, "Q2"))
+    data.extend(plot(sr, ratio, "SR"))
+    data.extend(plot(S, ratio, "S"))
 
 
     fig = go.Figure(data=data, layout=layout)
