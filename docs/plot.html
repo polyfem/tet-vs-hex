@@ -795,8 +795,18 @@ function load_data(name)
 	data.forEach(function(d) {
 		tmp.push(d["problem"] + " - " + d["formulation"]);
 
+		var assembly_scaling = 1;
+
+		if(!d["is_simplicial"])
+			assembly_scaling = 27.0/8.0;
+
 		d["time_total"] = d["time_assembling_stiffness_mat"] + d["time_assigning_rhs"] + d["time_building_basis"] + d["time_solving"];
 		d["time_total_no_rhs"] = d["time_assembling_stiffness_mat"] + d["time_building_basis"] + d["time_solving"];
+
+		d["time_total_opt_quad"] = d["time_assembling_stiffness_mat"] / assembly_scaling + d["time_assigning_rhs"] + d["time_building_basis"] + d["time_solving"];
+		d["time_total_opt_quad_no_rhs"] = d["time_assembling_stiffness_mat"] / assembly_scaling + d["time_building_basis"] + d["time_solving"];
+
+		d["time_assembling_stiffness_mat_opt_quad"] = d["time_assembling_stiffness_mat"] / assembly_scaling;
 	});
 
 	var problems = Array.from(new Set(tmp));
@@ -996,6 +1006,7 @@ showFlippedCheckobx.on('change', function(d){
 	showFlipped = val;
 	reaload();
 });
+
 
 </script>
 </body>

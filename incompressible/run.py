@@ -34,7 +34,7 @@ if __name__ == '__main__':
             for nu in nus:
                 json_data["params"]["E"] = E
                 json_data["params"]["nu"] = nu
-                json_data["problem_params"]["use_mixed_formulation"] = False
+                json_data["tensor_formulation"] = "LinearElasticity"
 
                 for discr_order in discr_orders:
                     json_data["discr_order"] = discr_order
@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
                         subprocess.run(args)
 
-                json_data["problem_params"]["use_mixed_formulation"] = True
+                json_data["tensor_formulation"] = "IncompressibleLinearElasticity"
                 json_data["discr_order"] = 2
                 json_data["output"] = os.path.join(current_folder, json_folder, title + "M_nu" + str(nu) + ".json")
                 json_data["export"]["vis_mesh"] = os.path.join(current_folder, vtu_folder, title + "M_nu" + str(nu) + ".vtu")
